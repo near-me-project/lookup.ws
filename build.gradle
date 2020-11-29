@@ -1,0 +1,38 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.0'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'java'
+}
+
+group = 'near.me'
+version = '1.0'
+sourceCompatibility = '8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'D:/java_projects/near.me.project/local.repo'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    compile group: 'org.modelmapper', name: 'modelmapper', version: '2.3.9'
+    compile group: 'com.rabbitmq', name: 'amqp-client', version: '5.9.0'
+    compile name: 'circuit.breaker-1.1.1'
+}
+
+test {
+    useJUnitPlatform()
+}
