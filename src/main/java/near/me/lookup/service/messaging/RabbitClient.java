@@ -7,7 +7,6 @@ import near.me.common.LocationInfoRequestModel;
 import near.me.lookup.shared.JsonMapper;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class RabbitClient {
 
