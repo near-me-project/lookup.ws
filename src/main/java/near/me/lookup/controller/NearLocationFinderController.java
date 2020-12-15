@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping
-public class AdviceRestController {
+public class NearLocationFinderController {
 
     @Autowired
     private AdviceService adviceService;

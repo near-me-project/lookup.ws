@@ -3,7 +3,7 @@ package near.me.lookup.service.impl;
 import near.me.lookup.controller.model.request.IncomeAdviceRequestDto;
 import near.me.lookup.controller.model.request.LocationRequestModel;
 import near.me.lookup.repository.LocationRepository;
-import near.me.lookup.repository.entity.LocationEntity;
+import near.me.lookup.repository.entity.Location;
 import near.me.lookup.service.AdviceService;
 import near.me.lookup.service.domain.LocationFinder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AdviceServiceImpl implements AdviceService {
 
     @Override
     public List<LocationRequestModel> processAdviceRequest(IncomeAdviceRequestDto event) {
-        final List<LocationEntity> allLocations = locationRepository.findByClientId(event.getClientId());
+        final List<Location> allLocations = locationRepository.findByClientId(event.getClientId());
 
         return allLocations.stream()
                 .filter(entity -> closeEnoughToTarget(entity, event.getLongitude(), event.getLatitude(), event.getRadius()))
@@ -35,7 +35,7 @@ public class AdviceServiceImpl implements AdviceService {
                 .collect(Collectors.toList());
     }
 
-    private LocationRequestModel map(LocationEntity entity) {
+    private LocationRequestModel map(Location entity) {
         return LocationRequestModel.builder()
                 .clientId(entity.getClientId())
                 .latitude(entity.getLatitude().toPlainString())
@@ -43,7 +43,7 @@ public class AdviceServiceImpl implements AdviceService {
                 .build();
     }
 
-    private boolean closeEnoughToTarget(LocationEntity entity, BigDecimal targetLongitude, BigDecimal targetLatitude, Double radius) {
+    private boolean closeEnoughToTarget(Location entity, BigDecimal targetLongitude, BigDecimal targetLatitude, Double radius) {
         return locationFinder.isCloseEnough(entity.getLatitude(), entity.getLongitude(), targetLongitude, targetLatitude, radius);
     }
 }

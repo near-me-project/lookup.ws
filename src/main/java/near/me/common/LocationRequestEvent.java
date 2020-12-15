@@ -4,13 +4,14 @@ import lombok.*;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LocationInfoRequestModel {
+@Builder
+public class LocationRequestEvent {
 
-    private String locationId;
     private String clientId;
     private String latitude;
     private String longitude;
+    private String city;
+    private String country;
 }

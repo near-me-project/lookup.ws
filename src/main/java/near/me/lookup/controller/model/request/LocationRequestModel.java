@@ -12,4 +12,9 @@ public class LocationRequestModel {
     private String clientId;
     private String latitude;
     private String longitude;
+    private String city;
+    private String country;
+    private String locationType;
+    private String clientDefinedLocationType;
+    private String description;
 }
