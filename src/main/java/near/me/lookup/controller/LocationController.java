@@ -5,7 +5,7 @@ import near.me.lookup.controller.model.request.LocationRequestModel;
 import near.me.lookup.controller.model.response.CreatedLocationResponseModel;
 import near.me.lookup.controller.model.response.LocationResponseModel;
 import near.me.lookup.repository.entity.LocationType;
-import near.me.lookup.service.impl.FilterCriteriaService;
+import near.me.lookup.repository.QueryLocationRepository;
 import near.me.lookup.service.LocationService;
 import near.me.lookup.service.domain.LocationDto;
 import near.me.lookup.service.domain.LocationRequestDto;
@@ -24,12 +24,12 @@ import java.util.stream.Collectors;
 public class LocationController {
 
     private LocationService locationService;
-    private FilterCriteriaService filterCriteriaService;
+    private QueryLocationRepository queryLocationRepository;
 
     @Autowired
-    public LocationController(LocationService locationService, FilterCriteriaService filterCriteriaService) {
+    public LocationController(LocationService locationService, QueryLocationRepository queryLocationRepository) {
         this.locationService = locationService;
-        this.filterCriteriaService = filterCriteriaService;
+        this.queryLocationRepository = queryLocationRepository;
     }
 
     @PostMapping
@@ -40,7 +40,7 @@ public class LocationController {
 
     @GetMapping(path = "/{userId}")
     public List<LocationResponseModel> getMySavedLocations(@PathVariable(name = "userId") String userId, FilterCriteria filter) {
-        List<LocationDto> all = filterCriteriaService.findLocationsFiltering(userId, filter);
+        List<LocationDto> all = queryLocationRepository.findLocationsFiltering(userId, filter);
         return all.stream().map(dto -> ModelMapper.map(dto, LocationResponseModel.class)).collect(Collectors.toList());
     }
 
