@@ -5,7 +5,7 @@ import near.me.lookup.controller.model.request.LocationRequestModel;
 import near.me.lookup.controller.model.response.CreatedLocationResponseModel;
 import near.me.lookup.controller.model.response.LocationResponseModel;
 import near.me.lookup.repository.entity.LocationType;
-import near.me.lookup.service.FilterCriteriaService;
+import near.me.lookup.service.impl.FilterCriteriaService;
 import near.me.lookup.service.LocationService;
 import near.me.lookup.service.domain.LocationDto;
 import near.me.lookup.service.domain.LocationRequestDto;

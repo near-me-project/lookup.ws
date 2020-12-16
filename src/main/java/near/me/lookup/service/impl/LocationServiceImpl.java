@@ -10,9 +10,6 @@ import near.me.lookup.service.domain.LocationRequestDto;
 import near.me.lookup.service.messaging.RabbitClient;
 import near.me.lookup.shared.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,14 +22,11 @@ public class LocationServiceImpl implements LocationService {
 
     private LocationRepository locationRepository;
     private RabbitClient rabbitClient;
-    private MongoTemplate mongoTemplate;
-
 
     @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient, MongoTemplate mongoTemplate) {
+    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient) {
         this.locationRepository = locationRepository;
         this.rabbitClient = rabbitClient;
-        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -66,13 +60,6 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public List<LocationDto> findAll(String clientId) {
         List<Location> locations = locationRepository.findByClientId(clientId);
-        return locations.stream().map(l -> ModelMapper.map(l, LocationDto.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<LocationDto> findLocations(Criteria criteria) {
-        List<Location> locations = mongoTemplate.find(Query.query(criteria), Location.class);
-
         return locations.stream().map(l -> ModelMapper.map(l, LocationDto.class)).collect(Collectors.toList());
     }
 }
