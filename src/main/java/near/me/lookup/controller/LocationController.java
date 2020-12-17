@@ -4,8 +4,9 @@ import near.me.lookup.controller.model.request.FilterCriteria;
 import near.me.lookup.controller.model.request.LocationRequestModel;
 import near.me.lookup.controller.model.response.CreatedLocationResponseModel;
 import near.me.lookup.controller.model.response.LocationResponseModel;
-import near.me.lookup.repository.entity.LocationType;
+import near.me.lookup.controller.model.response.UpdatedLocationResponseModel;
 import near.me.lookup.repository.QueryLocationRepository;
+import near.me.lookup.repository.entity.LocationType;
 import near.me.lookup.service.LocationService;
 import near.me.lookup.service.domain.LocationDto;
 import near.me.lookup.service.domain.LocationRequestDto;
@@ -36,6 +37,18 @@ public class LocationController {
     public ResponseEntity<CreatedLocationResponseModel> addLocation(@RequestBody LocationRequestModel locationRequestModel) {
         final String locationId = locationService.addLocation(map(locationRequestModel));
         return new ResponseEntity<>(CreatedLocationResponseModel.builder().createdLocationId(locationId).build(), HttpStatus.CREATED);
+    }
+
+    @PutMapping(path = "/{locationId}")
+    public ResponseEntity<UpdatedLocationResponseModel> updateLocation(@PathVariable(name = "locationId") String locationId, @RequestBody LocationRequestModel locationRequestModel) {
+        final String updatedLocationId = queryLocationRepository.updateLocation(locationId, map(locationRequestModel));
+        return new ResponseEntity<>(UpdatedLocationResponseModel.builder().updatedLocationId(updatedLocationId).build(), HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{locationId}")
+    @ResponseStatus(code = HttpStatus.OK)
+    public void deleteLocation(@PathVariable(name = "locationId") String locationId) {
+        queryLocationRepository.deleteLocation(locationId);
     }
 
     @GetMapping(path = "/{userId}")

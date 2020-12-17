@@ -10,6 +10,7 @@ import near.me.lookup.service.domain.LocationRequestDto;
 import near.me.lookup.service.messaging.RabbitClient;
 import near.me.lookup.shared.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,11 +23,13 @@ public class LocationServiceImpl implements LocationService {
 
     private LocationRepository locationRepository;
     private RabbitClient rabbitClient;
+    private MongoTemplate mongoTemplate;
 
     @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient) {
+    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient, MongoTemplate mongoTemplate) {
         this.locationRepository = locationRepository;
         this.rabbitClient = rabbitClient;
+        this.mongoTemplate = mongoTemplate;
     }
 
     @Override

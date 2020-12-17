@@ -1,7 +1,6 @@
 package near.me.lookup.service.domain;
 
 import lombok.*;
-import near.me.lookup.repository.entity.ClientDefinedLocationType;
 import near.me.lookup.repository.entity.LocationType;
 
 import java.math.BigDecimal;
