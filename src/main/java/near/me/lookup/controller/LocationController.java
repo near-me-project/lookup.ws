@@ -51,10 +51,16 @@ public class LocationController {
         queryLocationRepository.deleteLocation(locationId);
     }
 
-    @GetMapping(path = "/{userId}")
-    public List<LocationResponseModel> getMySavedLocations(@PathVariable(name = "userId") String userId, FilterCriteria filter) {
+    @GetMapping(path = "/for/{userId}")
+    public List<LocationResponseModel> getLocations(@PathVariable(name = "userId") String userId, FilterCriteria filter) {
         List<LocationDto> all = queryLocationRepository.findLocationsFiltering(userId, filter);
         return all.stream().map(dto -> ModelMapper.map(dto, LocationResponseModel.class)).collect(Collectors.toList());
+    }
+
+    @GetMapping(path = "/{locationId}")
+    public LocationResponseModel getLocation(@PathVariable(name = "locationId") String locationId) {
+        LocationDto dto = locationService.findByLocationId(locationId);
+        return ModelMapper.map(dto, LocationResponseModel.class);
     }
 
     private LocationRequestDto map(LocationRequestModel model) {

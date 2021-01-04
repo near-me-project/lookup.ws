@@ -16,7 +16,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,17 +62,18 @@ public class QueryLocationRepository {
         set(update, "description", dto.getDescription());
 
         UpdateResult result = mongoTemplate.upsert(query, update, Location.class);
-        if (!result.wasAcknowledged()) throw new RuntimeException("Location wasn't updated. " + locationId);
+        if (!result.wasAcknowledged() || result.getModifiedCount() == 0) throw new RuntimeException("Location wasn't updated. " + locationId);
         return locationId;
     }
 
     public void deleteLocation(String locationId) {
         Query query = Query.query(Criteria.where("locationId").is(locationId));
         DeleteResult result = mongoTemplate.remove(query, Location.class);
-        if (!result.wasAcknowledged()) throw new RuntimeException("Location wasn't deleted. " + locationId);
+        if (!result.wasAcknowledged() || result.getDeletedCount() == 0) throw new RuntimeException("Location wasn't deleted. " + locationId);
     }
 
     private void set(Update update, String key, String value) {
         if (value != null) update.set(key, value);
     }
+
 }

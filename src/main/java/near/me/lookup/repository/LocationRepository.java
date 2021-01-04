@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface LocationRepository extends MongoRepository<Location, String> {
     List<Location> findByClientId(String clientId);
+
+    Location findByLocationId(String locationId);
 }

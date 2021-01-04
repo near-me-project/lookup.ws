@@ -23,13 +23,11 @@ public class LocationServiceImpl implements LocationService {
 
     private LocationRepository locationRepository;
     private RabbitClient rabbitClient;
-    private MongoTemplate mongoTemplate;
 
     @Autowired
-    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient, MongoTemplate mongoTemplate) {
+    public LocationServiceImpl(LocationRepository locationRepository, RabbitClient rabbitClient) {
         this.locationRepository = locationRepository;
         this.rabbitClient = rabbitClient;
-        this.mongoTemplate = mongoTemplate;
     }
 
     @Override
@@ -64,5 +62,11 @@ public class LocationServiceImpl implements LocationService {
     public List<LocationDto> findAll(String clientId) {
         List<Location> locations = locationRepository.findByClientId(clientId);
         return locations.stream().map(l -> ModelMapper.map(l, LocationDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public LocationDto findByLocationId(String locationId) {
+        Location location = locationRepository.findByLocationId(locationId);
+        return ModelMapper.map(location, LocationDto.class);
     }
 }

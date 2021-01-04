@@ -12,4 +12,6 @@ public interface LocationService {
     List<LocationDto> findLocationsByClientId(String userId);
 
     List<LocationDto> findAll(String userId);
+
+    LocationDto findByLocationId(String locationId);
 }

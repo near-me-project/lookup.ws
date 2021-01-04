@@ -1,5 +1,6 @@
 package near.me.lookup.config;
 
+
 import circuit.breaker.RestClient;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;

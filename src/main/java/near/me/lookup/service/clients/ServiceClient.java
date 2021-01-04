@@ -18,6 +18,6 @@ public abstract class ServiceClient {
         return restClient.GET(new UriBuilder().setPath(environment.getProperty("discovery.url")+"/pathTo").addParameter("client", "info-ws"))
                 .executeSilent()
                 .getContentAsString()
-                .orElse("nothing");
+                .orElse("wasn't find");
     }
 }

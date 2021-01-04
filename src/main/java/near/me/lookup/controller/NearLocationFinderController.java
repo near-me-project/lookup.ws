@@ -19,7 +19,7 @@ public class NearLocationFinderController {
     @Autowired
     private AdviceService adviceService;
 
-    @GetMapping(path = "/location/nearby/{clientId}")
+    @GetMapping(path = "/locations/nearby/{clientId}")
     public List<LocationModel> getNearbyLocations(@PathVariable("clientId") String clientId,
                                                   @RequestParam("latitude") String latitude,
                                                   @RequestParam("longitude") String longitude,
