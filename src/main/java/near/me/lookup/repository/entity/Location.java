@@ -8,7 +8,9 @@ import org.springframework.data.mongodb.core.index.TextIndexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -34,5 +36,5 @@ public class Location {
 
     @TextIndexed
     private String description;
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 }
