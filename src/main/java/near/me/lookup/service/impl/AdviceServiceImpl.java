@@ -5,7 +5,7 @@ import near.me.lookup.controller.model.request.LocationRequestModel;
 import near.me.lookup.repository.LocationRepository;
 import near.me.lookup.repository.entity.Location;
 import near.me.lookup.service.AdviceService;
-import near.me.lookup.service.domain.LocationFinder;
+import near.me.lookup.service.domain.GpsLocationUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 public class AdviceServiceImpl implements AdviceService {
 
     private LocationRepository locationRepository;
-    private LocationFinder locationFinder;
+    private GpsLocationUtils gpsLocationUtils;
 
     @Autowired
     public AdviceServiceImpl(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;
-        this.locationFinder = new LocationFinder();
+        this.gpsLocationUtils = new GpsLocationUtils();
     }
 
     @Override
@@ -44,6 +44,6 @@ public class AdviceServiceImpl implements AdviceService {
     }
 
     private boolean closeEnoughToTarget(Location entity, BigDecimal targetLongitude, BigDecimal targetLatitude, Double radius) {
-        return locationFinder.isCloseEnough(entity.getLatitude(), entity.getLongitude(), targetLongitude, targetLatitude, radius);
+        return gpsLocationUtils.isCloseEnough(entity.getLatitude(), entity.getLongitude(), targetLongitude, targetLatitude, radius);
     }
 }
